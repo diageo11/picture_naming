@@ -1,0 +1,22 @@
+{
+	"male": {
+				"condA": { 
+					"listA": { "count": 3, "participants": [] }, 
+					"listB": { "count": 5, "participants": [] }
+				},
+				"condB": { 
+					"listA": { "count": 0, "participants": [] }, 
+					"listB": { "count": 5, "participants": [] } 
+				}
+	},
+	"female": {
+				"condA": { 
+					"listA": { "count": 7, "participants": [] },
+					"listB": { "count": 8, "participants": [] }
+				},
+				"condB": { 
+					"listA": { "count": 6, "participants": [] }, 
+					"listB": { "count": 8, "participants": [] }
+			  	}
+	}
+}
