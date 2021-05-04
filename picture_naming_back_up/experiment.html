@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <meta charset="utf-8" />
     <title>Picture Matching Game</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -12,519 +11,512 @@
     <script src="jspsych-6.1.0/plugins/jspsych-instructions.js"></script>
     <script src="jspsych-6.1.0/plugins/jspsych-survey-html-form.js"></script>
     <script src="jspsych-6.1.0/plugins/jspsych-fullscreen.js"></script>
-    <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link
+      href="jspsych-6.1.0/css/jspsych.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
 
     <style>
-        body {
-            background-color: #F5F5F5;
+      body {
+        background-color: #f5f5f5;
+      }
+
+      .jspsych-btn {
+        margin-bottom: 2em;
+      }
+
+      #jspsych-picture-match-stimulus {
+        width: 600px;
+        height: 250px;
+        margin-bottom: 50px;
+      }
+
+      #jspsych-picture-match-stimulus {
+        width: 600px;
+      }
+
+      .stimulus {
+        border: solid black 4px;
+        transition: border 1s;
+      }
+
+      .left {
+        float: left;
+      }
+
+      .right {
+        float: right;
+      }
+
+      .highlight {
+        animation: blinking-orange 1.3s forwards;
+      }
+
+      .blink {
+        animation: blinking-green 1.3s forwards;
+      }
+
+      @keyframes blinking-green {
+        0% {
+          border-color: #00ff00;
         }
 
-        .jspsych-btn {
-            margin-bottom: 2em;
+        5% {
+          border-color: black;
         }
 
-        #jspsych-picture-match-stimulus {
-            width: 600px;
-            height: 250px;
-            margin-bottom: 50px;
+        10% {
+          border-color: #00ff00;
         }
 
-        #jspsych-picture-match-stimulus {
-            width: 600px;
+        15% {
+          border-color: black;
         }
 
-        .stimulus {
-            border: solid black 4px;
-            transition: border 1s;
+        20% {
+          border-color: #00ff00;
         }
 
-        .left {
-            float: left;
+        100% {
+          border-color: #00ff00;
+        }
+      }
+
+      @keyframes blinking-orange {
+        0% {
+          border-color: #ff5733;
         }
 
-        .right {
-            float: right;
+        5% {
+          border-color: black;
         }
 
-        .highlight {
-            animation: blinking-orange 1.3s forwards;
+        10% {
+          border-color: #ff5733;
         }
 
-        .blink {
-            animation: blinking-green 1.3s forwards;
+        15% {
+          border-color: black;
         }
 
-        @keyframes blinking-green {
-            0% {
-                border-color: #00FF00;
-            }
-
-            5% {
-                border-color: black;
-            }
-
-            10% {
-                border-color: #00FF00;
-            }
-
-            15% {
-                border-color: black;
-            }
-
-            20% {
-                border-color: #00FF00;
-            }
-
-            100% {
-                border-color: #00FF00;
-            }
+        20% {
+          border-color: #ff5733;
         }
 
-        @keyframes blinking-orange {
-            0% {
-                border-color: #FF5733;
-            }
-
-            5% {
-                border-color: black;
-            }
-
-            10% {
-                border-color: #FF5733;
-            }
-
-            15% {
-                border-color: black;
-            }
-
-            20% {
-                border-color: #FF5733;
-            }
-
-            100% {
-                border-color: #FF5733;
-            }
+        100% {
+          border-color: #ff5733;
         }
+      }
 
-        @keyframes blinking-opacity {
-            50% {
-                opacity: 0;
-            }
+      @keyframes blinking-opacity {
+        50% {
+          opacity: 0;
         }
+      }
 
-        /* Rules for sizing the icon. */
-        .material-icons.md-18 {
-            font-size: 18px;
-        }
+      /* Rules for sizing the icon. */
+      .material-icons.md-18 {
+        font-size: 18px;
+      }
 
-        .material-icons.md-24 {
-            font-size: 24px;
-        }
+      .material-icons.md-24 {
+        font-size: 24px;
+      }
 
-        .material-icons.md-36 {
-            font-size: 36px;
-        }
+      .material-icons.md-36 {
+        font-size: 36px;
+      }
 
-        .material-icons.md-48 {
-            font-size: 48px;
-        }
+      .material-icons.md-48 {
+        font-size: 48px;
+      }
 
-        .strong {
-            font-weight: bold;
-        }
+      .strong {
+        font-weight: bold;
+      }
 
-        .instructions {
-            background-color: white;
-            max-width: 800px;
-            padding: 40px;
-            margin: 10px;
-            text-align: justify;
-            box-shadow: 2px 2px 2px rgba(0, 0, 0, .3);
-        }
+      .instructions {
+        background-color: white;
+        max-width: 800px;
+        padding: 40px;
+        margin: 10px;
+        text-align: justify;
+        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+      }
 
-        .form {
-            margin-bottom: 1em;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font: 11pt monospace;
-            transition: opacity .5s ease-out, margin .5s ease-out;
+      .form {
+        margin-bottom: 1em;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font: 11pt monospace;
+        transition: opacity 0.5s ease-out, margin 0.5s ease-out;
+      }
 
-        }
+      .form * {
+        flex-basis: 45%;
+        margin: 0 1rem;
+      }
 
-        .form * {
-            flex-basis: 45%;
-            margin: 0 1rem
-        }
+      .questionnaire {
+        margin-bottom: 1em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font: 11pt monospace;
+      }
 
-        .questionnaire {
-            margin-bottom: 1em;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font: 11pt monospace;
-        }
+      .questionnaire * {
+        flex-basis: 85%;
+        margin: 0 1rem;
+      }
 
-        .questionnaire * {
-            flex-basis: 85%;
-            margin: 0 1rem;
-        }
+      .hidden {
+        opacity: 0;
+        height: 0;
+        margin: 0;
+        overflow: hidden;
+      }
 
-        .hidden {
-            opacity: 0;
-            height: 0;
-            margin: 0;
-            overflow: hidden;
-        }
+      .hide {
+        opacity: 0;
+      }
 
-        .hide {
-            opacity: 0;
-        }
+      .show {
+        animation: blinking-opacity 1s linear infinite;
+        opacity: 1;
+      }
 
-        .show {
-            animation: blinking-opacity 1s linear infinite;
-            opacity: 1;
+      .number-stroop {
+        width: 300px;
+        font-size: 48pt;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 auto;
+      }
 
-        }
+      .larger {
+        font-size: 4em;
+        font-weight: bolder;
+        max-width: 550px;
+      }
 
-        .number-stroop {
-            width: 300px;
-            font-size: 48pt;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 0 auto;
-        }
+      #logs {
+        font-family: monospace;
+        font-size: 8pt;
+        height: 5.5rem;
+        overflow: hidden;
+        padding: 0 1rem;
+        background-color: black;
+        color: white;
+      }
 
-        .larger {
-            font-size: 4em;
-            font-weight: bolder;
-            max-width: 550px;
-        }
+      h2 {
+        margin-bottom: 0.5rem;
+      }
 
-        #logs {
-            font-family: monospace;
-            font-size: 8pt;
-            height: 5.5rem;
-            overflow: hidden;
-            padding: 0 1rem;
-            background-color: black;
-            color: white;
-        }
+      .answer_holder,
+      .alert_holder {
+        display: flex;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
 
-        h2 {
-            margin-bottom: .5rem;
-        }
+      .answer_display {
+        width: 500px;
+        height: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        background-color: white;
+      }
 
-        .answer_holder,
-        .alert_holder {
-            display: flex;
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 100%;
-            align-items: center;
-            justify-content: center;
-            background-color: rgba(0, 0, 0, .5);
-        }
+      .answer_display p {
+        padding: 0 20px;
+        margin-top: 0;
+      }
 
-        .answer_display {
-            width: 500px;
-            height: auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            background-color: white;
-        }
-
-        .answer_display p {
-            padding: 0 20px;
-            margin-top: 0;
-        }
-
-        .answer_display button {
-            margin-bottom: 20px;
-        }
-
+      .answer_display button {
+        margin-bottom: 20px;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-    <H1>Microphone Testing</H1>
-    <p>To take part in this experiment you will require a working microphone. Please test your voice using the record button to make sure that your microphone works.</p>
-    <button onclick='record()' id='record'>Record</button>
-    <button onclick='stop()' id='stop' disabled>Stop</button>
+  <body>
+    <h1>Microphone Testing</h1>
+    <p>
+      To take part in this experiment you will require a working microphone.
+      Please test your voice using the record button to make sure that your
+      microphone works.
+    </p>
+    <button onclick="record()" id="record">Record</button>
+    <button onclick="stop()" id="stop" disabled>Stop</button>
     <h2>Information Logs</h2>
-    <div id='logs'></div>
+    <div id="logs"></div>
     <h2>Recordings</h2>
-    <div id='recordings'></div>
+    <div id="recordings"></div>
 
     <div>
-        <p>Please make sure to listen to a few recordings before you press continue. Make sure that you can clearly hear your voice at a regular volume, and that it is easy to understand the spoken content. Feel free to say this sentence aloud for testing.</p> <button onclick='startExperiment()' id='start' disabled>Continue</button>
+      <p>
+        Please make sure to listen to a few recordings before you press
+        continue. Make sure that you can clearly hear your voice at a regular
+        volume, and that it is easy to understand the spoken content. Feel free
+        to say this sentence aloud for testing.
+      </p>
+      <button onclick="startExperiment()" id="start" disabled>Continue</button>
     </div>
-
-
 
     <script src="javascripts/main.js"></script>
     <script>
-        var gender = 'male'; // GENDER SPECIFIED IN MTURK
-        var mediaRecorder;
-        var audioChunks;
-        var curStream;
-        var audioTrackLabel;
+      var gender = "male"; // GENDER SPECIFIED IN MTURK
+      var mediaRecorder;
+      var audioChunks;
+      var curStream;
+      var audioTrackLabel;
 
-        var changelog;
+      var changelog;
 
-        var counts = {
-            "male": {
-                "condA,listA": 5,
-                "condA,listB": 8,
-                "condB,listA": 3,
-                "condB,listB": 9
-            },
-            "female": {
-                "condA,listA": 9,
-                "condA,listB": 10,
-                "condB,listA": 8,
-                "condB,listB": 10
-            }
-        }
+      var counts = {
+        male: {
+          "condA,listA": 5,
+          "condA,listB": 8,
+          "condB,listA": 3,
+          "condB,listB": 9,
+        },
+        female: {
+          "condA,listA": 9,
+          "condA,listB": 10,
+          "condB,listA": 8,
+          "condB,listB": 10,
+        },
+      };
 
-        function record() {
-            $('#logs').prepend(
-                $('<p>', {
-                    text: 'Attempting to record audio.'
-                })
+      function record() {
+        $("#logs").prepend(
+          $("<p>", {
+            text: "Attempting to record audio.",
+          })
+        );
+
+        navigator.mediaDevices
+          .getUserMedia({
+            audio: true,
+          })
+          .then((stream) => {
+            window.streamReference = stream;
+            mediaRecorder = new MediaRecorder(stream);
+            mediaRecorder.start();
+            audioTrackLabel = stream.getAudioTracks()[0].label;
+
+            $("#logs").prepend(
+              $("<p>", {
+                text: "Recording started.",
+              })
             );
 
-            navigator.mediaDevices.getUserMedia({
-                    audio: true
-                })
-                .then(stream => {
-                    window.streamReference = stream;
-                    mediaRecorder = new MediaRecorder(stream);
-                    mediaRecorder.start();
-                    audioTrackLabel = stream.getAudioTracks()[0].label;
+            audioChunks = [];
+            $("#record")[0].disabled = true;
+            $("#stop")[0].disabled = false;
 
-                    $('#logs').prepend(
-                        $('<p>', {
-                            text: 'Recording started.'
-                        })
-                    );
+            mediaRecorder.ondataavailable = (event) => {
+              audioChunks.push(event.data);
+            };
 
-                    audioChunks = [];
-                    $('#record')[0].disabled = true;
-                    $('#stop')[0].disabled = false;
+            mediaRecorder.onstop = (event) => {
+              const audioBlob = new Blob(audioChunks);
+              const audioUrl = URL.createObjectURL(audioBlob);
+              const audio = new Audio(audioUrl);
 
-                    mediaRecorder.ondataavailable = event => {
-                        audioChunks.push(event.data);
-                    }
+              $(
+                `<audio controls preload='auto'><source src=${audioUrl}></audio>`
+              ).appendTo("#recordings");
+            };
+          })
+          .catch((e) => {
+            $("#logs").prepend(
+              $("<p>", {
+                text:
+                  "Could not connect to microphone. Make sure you have given permission. Refresh the page if necessary.",
+              })
+            );
+            console.log(e);
+          });
+      }
 
-                    mediaRecorder.onstop = event => {
-                        const audioBlob = new Blob(audioChunks);
-                        const audioUrl = URL.createObjectURL(audioBlob);
-                        const audio = new Audio(audioUrl);
+      function stop() {
+        if (mediaRecorder) {
+          mediaRecorder.stop();
+          $("#logs").prepend(
+            $("<p>", {
+              text: "Recording stopped.",
+            })
+          );
+          $("#stop")[0].disabled = true;
+          $("#record")[0].disabled = false;
+          $("#start")[0].disabled = false;
 
-                        $(`<audio controls preload='auto'><source src=${audioUrl}></audio>`).appendTo('#recordings');
-                    }
-                }).catch(e => {
-                    $('#logs').prepend(
-                        $('<p>', {
-                            text: 'Could not connect to microphone. Make sure you have given permission. Refresh the page if necessary.'
-                        })
-                    );
-                    console.log(e);
-                });
-
+          window.streamReference.getAudioTracks().forEach(function (track) {
+            track.stop();
+          });
         }
+      }
 
+      async function getChangelog() {
+        // Fetch API grabs txt file and reads it
+        return fetch("changelog.txt")
+          .then((response) => response.text())
+          .then((data) => {
+            // Process data and split by line
+            let lines = data.split("\n");
 
-        function stop() {
-
-            if (mediaRecorder) {
-                mediaRecorder.stop();
-                $('#logs').prepend($('<p>', {
-                    text: 'Recording stopped.'
-                }));
-                $('#stop')[0].disabled = true;
-                $('#record')[0].disabled = false;
-                $('#start')[0].disabled = false;
-
-                window.streamReference.getAudioTracks()
-                    .forEach(function(track) {
-                        track.stop();
-                    });
-            }
-
-        }
-
-
-        async function getChangelog() {
-            // Fetch API grabs txt file and reads it
-            return fetch('changelog.txt')
-                .then(response => response.text())
-                .then(data => {
-                    // Process data and split by line
-                    let lines = data.split('\n');
-
-                    // Create dictionary of entries
-                    let processed = {}
-                    // SEEMS TO SPLIT
-                    $.each(lines, (i, v) => {
-                        let split = v.split(',');
-                        if (split.length != 5) return true
-                        processed[split[0]] = {
-                            'status': split[1],
-                            'time': split[2],
-                            'cond': split[3],
-                            'list': split[4]
-                        };
-                    });
-                    changelog = processed;
-                    actionLog(changelog);
-
-                })
-                .catch(err => console.error(err));
-        }
-
-        function actionLog(log) {
-            // Count per condition
-            let counting = {};
-            $.each(log, (subject, details) => {
-                let name = details.cond + ',' + details.list;
-
-                if (details.status == "abandoned") {
-                    delete log[subject];
-                    console.log('abandoned', subject);
-                    return true;
-                }
-
-                if (name in counting) {
-                    counting[name]++;
-                } else {
-                    counting[name] = 1;
-                }
-
+            // Create dictionary of entries
+            let processed = {};
+            // SEEMS TO SPLIT
+            $.each(lines, (i, v) => {
+              let split = v.split(",");
+              if (split.length != 5) return true;
+              processed[split[0]] = {
+                status: split[1],
+                time: split[2],
+                cond: split[3],
+                list: split[4],
+              };
             });
+            changelog = processed;
+            actionLog(changelog);
+          })
+          .catch((err) => console.error(err));
+      }
 
-            let options = [];
-            let overflows = [];
+      function actionLog(log) {
+        // Count per condition
+        let counting = {};
+        $.each(log, (subject, details) => {
+          let name = details.cond + "," + details.list;
 
-            $.each(counts[gender], (k, v) => {
-                if (k in counting) {
-                    if (v > counting[k]) {
-                        let x = counting[k];
-                        while (v > x) {
-                            options.push(k);
-                            x++;
-                        }
-                    } else if (v <= counting[k]) {
-                        console.log('overflow in ', k);
-                        overflows.push([k, counting[k] - v]);
-                    }
-                } else {
-                    let x = v;
-                    while (x > 0) {
-                        options.push(k);
-                        x--;
-                    }
-                }
-            });
+          if (details.status == "abandoned") {
+            delete log[subject];
+            console.log("abandoned", subject);
+            return true;
+          }
 
-            console.log('options: ', options);
-            console.log('overflows:', overflows);
+          if (name in counting) {
+            counting[name]++;
+          } else {
+            counting[name] = 1;
+          }
+        });
 
-            if (options.length > 0) {
-                let selection = jsPsych.randomization
-                    .sampleWithoutReplacement(options, 1)[0];
+        let options = [];
+        let overflows = [];
 
-                let info = selection.split(',');
-
-                condition_assignment = info[0];
-                list_assignment = info[1];
-                console.log(condition_assignment, list_assignment);
-
-            } else if (overflows.length > 0) {
-                overflows.sort((a, b) => (a[1] > b[1]) ? 1 : -1)
-                let info = overflows[0][0].split(',');
-                condition_assignment = info[0];
-                list_assignment = info[1];
+        $.each(counts[gender], (k, v) => {
+          if (k in counting) {
+            if (v > counting[k]) {
+              let x = counting[k];
+              while (v > x) {
+                options.push(k);
+                x++;
+              }
+            } else if (v <= counting[k]) {
+              console.log("overflow in ", k);
+              overflows.push([k, counting[k] - v]);
             }
-
-            let cur = {
-                status: 'pending',
-                time: Date.now(),
-                cond: condition_assignment,
-                list: list_assignment
+          } else {
+            let x = v;
+            while (x > 0) {
+              options.push(k);
+              x--;
             }
-            
-            log[subject_id] = cur;
+          }
+        });
 
-            // this adds a property called 'subject' and a property called 'condition' to every trial
-            jsPsych.data.addProperties({
-                subject: subject_id,
-                list: list_assignment,
-                condition: condition_assignment
-            });
-            
-            let data = `${subject_id},${cur.status},${cur.time},${cur.cond},${cur.list}\n`
-            
-            appendToChangelog(data);
-            
+        console.log("options: ", options);
+        console.log("overflows:", overflows);
+
+        if (options.length > 0) {
+          let selection = jsPsych.randomization.sampleWithoutReplacement(
+            options,
+            1
+          )[0];
+
+          let info = selection.split(",");
+
+          condition_assignment = info[0];
+          list_assignment = info[1];
+          console.log(condition_assignment, list_assignment);
+        } else if (overflows.length > 0) {
+          overflows.sort((a, b) => (a[1] > b[1] ? 1 : -1));
+          let info = overflows[0][0].split(",");
+          condition_assignment = info[0];
+          list_assignment = info[1];
         }
 
-        async function appendToChangelog(data) {
-            let to_send = data;
+        let cur = {
+          status: "pending",
+          time: Date.now(),
+          cond: condition_assignment,
+          list: list_assignment,
+        };
 
-            fetch('/picture_naming/append_txt.php', {
-                    method: "POST",
-                    body: to_send
-                }).then(response => {
-                    if (response.ok) {
-                        return response
-                    } else {
-                        throw Error(`Server returned ${response.status}: ${response.statusText}`);
-                    }
-                }).then(response => console.log(response.text()))
-                .catch(e => alert(e))
-        }
+        log[subject_id] = cur;
 
-//        async function saveChangelog(data) {
-//            let changelog_string = "";
-//            $.each(data, (k, v) => {
-//                changelog_string += `${k},${v.status},${v.time},${v.cond},${v.list}\n`;
-//            });
-//            console.log(changelog_string);
-//
-//            fetch('/picture_naming/save_txt.php', {
-//                    method: "POST",
-//                    body: changelog_string
-//                }).then(response => {
-//                    if (response.ok) {
-//                        return response
-//                    } else {
-//                        throw Error(`Server returned ${response.status}: ${response.statusText}`);
-//                    }
-//                }).then(response => console.log(response.text()))
-//                .catch(e => alert(e))
-//        }
+        // this adds a property called 'subject' and a property called 'condition' to every trial
+        jsPsych.data.addProperties({
+          subject: subject_id,
+          list: list_assignment,
+          condition: condition_assignment,
+        });
 
-        async function markAbandoned(ID) {
-            let data = `${ID},abandoned,${Date.now()},${condition_assignment},${list_assignment}\n`;
+        let data = `${subject_id},${cur.status},${cur.time},${cur.cond},${cur.list}\n`;
 
-            appendToChangelog(data);
-        }
+        appendToChangelog(data);
+      }
 
-        async function markCompleted(ID) {
-            let data = `${ID},completed,${Date.now()},${condition_assignment},${list_assignment}\n`;
+      async function appendToChangelog(data) {
+        let to_send = data;
 
-            appendToChangelog(data);
-        }
+        fetch("/picture_naming/append_txt.php", {
+          method: "POST",
+          body: to_send,
+        })
+          .then((response) => {
+            if (response.ok) {
+              return response;
+            } else {
+              throw Error(
+                `Server returned ${response.status}: ${response.statusText}`
+              );
+            }
+          })
+          .then((response) => console.log(response.text()))
+          .catch((e) => alert(e));
+      }
 
+      async function markAbandoned(ID) {
+        let data = `${ID},abandoned,${Date.now()},${condition_assignment},${list_assignment}\n`;
+
+        appendToChangelog(data);
+      }
+
+      async function markCompleted(ID) {
+        let data = `${ID},completed,${Date.now()},${condition_assignment},${list_assignment}\n`;
+
+        appendToChangelog(data);
+      }
     </script>
-</body>
-
+  </body>
 </html>
